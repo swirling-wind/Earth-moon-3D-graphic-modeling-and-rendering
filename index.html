@@ -24,12 +24,12 @@
 
 <body onload="initializer()">
 	<div style="display:flex; justify-content:space-between; line-height:20px; color:black; font-size:1vw;">
-		<li id="xvTip">X/V-Objects Rotate Clockwise/Counterclockwise</li>
-		<li id="qeTip">Q/E-Light Source Rotates Clockwise/Counterclockwise</li>
-		<li id="zcTip">Z/C-Zoom out/in</li>
-		<li id="pTip">P-Switch Projection Method</li>
-		<li id="tTip">T-Auto Rotation on/off</li>
-		<li id="rTip">R-Reset Status</li>
+		<li id="xvTip">X/V<br>Objects Rotate Clockwise/Counterclockwise</li>
+		<li id="qeTip">Q/E<br>Light Rotates Clockwise/Counterclockwise</li>
+		<li id="zcTip">Z/C<br>Zoom out/in</li>
+		<li id="pTip">P<br>Switch Projection</li>
+		<li id="tTip">T<br>Auto Rotation on/off</li>
+		<li id="rTip">R<br>Reset Status</li>
 		<input type="button" name="switchLang" value="中文" style="width:80px;height:30px;" onclick="switchLanguage()">
 	</div>
 	<canvas height="700" width="1050" id="myCanvas">
@@ -43,23 +43,23 @@
 	var langTips = {
 		'Chinese': {
 			'tips': {
-				'xvTip': "X/V-<br>物体沿顺/逆时针方向旋转",
-				'qeTip': "Q/E-<br>光源位置沿逆/顺时针方向旋转",
-				'zcTip': "Z/C-<br>相机距离拉远/拉近",
-				'pTip': "P-<br>切换平行投影/透视投影",
-				'tTip': "T-<br>是否自动旋转",
-				'rTip': "R-<br>重置状态",
+				'xvTip': "X/V<br>物体沿顺/逆时针方向旋转",
+				'qeTip': "Q/E<br>光源位置沿逆/顺时针方向旋转",
+				'zcTip': "Z/C<br>相机距离拉远/拉近",
+				'pTip': "P<br>切换平行投影/透视投影",
+				'tTip': "T<br>是否自动旋转",
+				'rTip': "R<br>重置状态",
 			},
 			'buttonValue': 'English',
 		},
 		'English': {
 			'tips': {
-				'xvTip': "X/V-Objects Rotate Clockwise/Counterclockwise",
-				'qeTip': "Q/E-Light Source Rotates Clockwise/Counterclockwise",
-				'zcTip': "Z/C-Zoom out/in",
-				'pTip': "P-Switch Projection",
-				'tTip': "T-Auto Rotation on/off",
-				'rTip': "R-Reset Status",
+				'xvTip': "X/V<br>Objects Rotate Clockwise/Counterclockwise",
+				'qeTip': "Q/E<br>Light Rotates Clockwise/Counterclockwise",
+				'zcTip': "Z/C<br>Zoom out/in",
+				'pTip': "P<br>Switch Projection",
+				'tTip': "T<br>Auto Rotation on/off",
+				'rTip': "R<br>Reset Status",
 			},
 			'buttonValue': '中文',
 		},

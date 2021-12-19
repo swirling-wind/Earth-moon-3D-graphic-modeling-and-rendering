@@ -1,39 +1,39 @@
 <html>
-<head>
-    <title>地球与月球</title>
-    <style type="text/css">
-        html {
-            width: 100%;
-            height: 100%;
-        }
 
-        body {
-            margin: 5px;
-            width: calc(100% - 10px);
-            height: calc(100% - 40px);
-        }
-    </style>
-    <script type="text/javascript" src="js/Matrix.js"></script>
-    <script type="text/javascript" src="js/MV.js"></script>
-    <script type="text/javascript" src="js/shader.js"></script>
-    <script type="text/javascript" src="js/sphere.js"></script>
-    <script type="text/javascript" src="js/starBox.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+<head>
+	<title>地球与月球</title>
+	<style type="text/css">
+		html {
+			width: 100%;
+			height: 100%;
+		}
+
+		body {
+			margin: 5px;
+			width: calc(100% - 10px);
+			height: calc(100% - 40px);
+		}
+	</style>
+	<script type="text/javascript" src="js/Matrix.js"></script>
+	<script type="text/javascript" src="js/MV.js"></script>
+	<script type="text/javascript" src="js/shader.js"></script>
+	<script type="text/javascript" src="js/sphere.js"></script>
+	<script type="text/javascript" src="js/starBox.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
 
 <body onload="initializer();">
-<div style="display:flex; justify-content:space-between; line-height:20px; color:black; font-size:1vw;">
-    <text>X/V-物体沿顺/逆时针方向旋转</text>
-    <text>WS/AD-摄像头沿上下/左右方向移动</text>
-    <text>Q/E-光源位置沿逆/顺时针方向移动</text>
-    <text>Z/C-拉远/拉近摄像头</text>
-    <text>P-切换投影方式</text>
-    <text>T-自动旋转与否</text>
-    <text>R-重置状态</text>
-</div>
-<canvas height="800" width="1300" id="myCanvas">
-    若看到这个文字，说明浏览器不支持WebGL!
-</canvas>
+	<div style="display:flex; justify-content:space-between; line-height:20px; color:black; font-size:1vw;">
+		<text>X/V-物体沿顺/逆时针方向旋转</text>
+		<text>Q/E-光源位置沿逆/顺时针方向移动</text>
+		<text>Z/C-拉远/拉近摄像头</text>
+		<text>P-切换投影方式</text>
+		<text>T-自动旋转与否</text>
+		<text>R-重置状态</text>
+	</div>
+	<canvas height="900" width="1200" id="myCanvas">
+		若看到这个文字，说明浏览器不支持WebGL!
+	</canvas>
 </body>
 
 <script id="earth-vertex" type="x-shader/x-vertex">#version 300 es

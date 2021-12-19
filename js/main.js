@@ -4,8 +4,7 @@ var clockwiseAngle = 0;// 顺时针
 var anticlockAngle = 0;// 逆时针
 var rotateSpeed = 0;
 
-var thetaAngle = 0;//摄像机上下旋转的角度
-var phiAngle = 0;
+
 
 var distance = 50;
 var sunAngle = 0;
@@ -14,6 +13,22 @@ var sunAngle = 0;
 var sunX = 100;
 var sunZ = 0;
 
+//鼠标旋转
+var yPreviousPosition;//上次的触控位置Y坐标
+var xPreviousPosition;//上次的触控位置X坐标
+var thetaAngle = 0;//摄像机上下旋转的角度
+var phiAngle = 0;//摄像机左右旋转的角度
+var down = false;//是否按下鼠标
+var ROTATE_SCALE = 180.0 / 320;//旋转角度与光标移动距离的比例
+
+function setProjection() {
+    // modelMatrix.setProjectFrustum
+    if (isFrustum) { // 透视投影
+        modelMatrix.setProjectFrustum(-1.5, 1.5, -1, 1, 2, 200);
+    } else {			// 平行投影（正投影）
+        modelMatrix.setProjectOrtho(-30, 30, -20, 20, 2, 200);
+    }
+}
 
 function calCameraPosition(theta_angle, phi_angle, camera_distance) {
     var sin_theta = Math.sin(Math.PI / 180 * theta_angle);
@@ -32,55 +47,33 @@ function calCameraPosition(theta_angle, phi_angle, camera_distance) {
     modelMatrix.setCamera(cameraX, cameraHeight, cameraY, 0, 0, 0, upX, upY, upZ); 	//设置摄像机位置
 }
 
-function setProjection() {
-    // modelMatrix.setProjectFrustum
-    if (isFrustum) { // 透视投影
-        modelMatrix.setProjectFrustum(-1.5, 1.5, -1, 1, 2, 200);
-    } else {			// 平行投影（正投影）
-        modelMatrix.setProjectOrtho(-30, 30, -20, 20, 2, 200);
-    }
-}
-
-document.onmousedown = function (event) {
-    mPreviousX = event.pageX;//获取触控点x坐标
-    mPreviousY = event.pageY;//获取触控点y坐标
-    down = true;//按下鼠标
-}
 document.onmousemove = function (event)//鼠标移动
 {
     if (down)//已经按下鼠标
     {
-        var moveX = event.pageX;//获取移动点x坐标
-        var moveY = event.pageY;//获取移动点x坐标
-
-        var dx = moveX - mPreviousX;//计算触控笔x位移
-        yAngle += dx * TOUCH_SCALE_FACTOR;//设置光源绕y轴旋转的角度
-        //触控横向位移，光源绕y轴旋转
-        sunx = (Math.cos(0.017453 * yAngle) * 100);//计算光源的x坐标
-        sunz = -(Math.sin(0.017453 * yAngle) * 100); //计算光源的z坐标
-
-
-        var dy = moveY - mPreviousY;//计算触控笔y位移 
-        xAngle += dy * TOUCH_SCALE_FACTOR;	//设置摄像机绕x轴旋转的角度
-        if (xAngle > 90) {
-            xAngle = 90;	//设置旋转的角度为90
+        var dx = event.pageX - xPreviousPosition;//计算触控笔x位移
+        var dy = event.pageY - yPreviousPosition;//计算触控笔y位移 
+        thetaAngle += dy * ROTATE_SCALE;	//设置摄像机绕x轴旋转的角度
+        phiAngle += dx * ROTATE_SCALE;//设置光源绕y轴旋转的角度
+        if (thetaAngle > 90) {
+            thetaAngle = 90;	//设置旋转的角度为90
         }
-        else if (xAngle < -90) {
-            xAngle = -90;	//设置旋转的角度为-90
+        else if (thetaAngle < -90) {
+            thetaAngle = -90;	//设置旋转的角度为-90
         }
-        //触控纵向位移，摄像机绕x轴旋转 -90～+90
-        var cy = (50 * Math.sin(0.017453 * xAngle));//计算摄像机的y坐标
-        var cz = (50 * Math.cos(0.017453 * xAngle));//计算摄像机的z坐标
-        var upy = Math.cos(0.017453 * xAngle);
-        var upz = - Math.sin(0.017453 * xAngle);
-        ms.setCamera(0, cy, cz, 0, 0, 0, 0, upy, upz); 	//设置摄像机位置
+        calCameraPosition(thetaAngle, phiAngle, distance);
     }
-    mPreviousX = event.pageX;	//记录此次触控点的x坐标
-    mPreviousY = event.pageY;	//记录此次触控点的y坐标
+    xPreviousPosition = event.pageX;	//记录此次触控点的x坐标
+    yPreviousPosition = event.pageY;	//记录此次触控点的y坐标
+}
+document.onmousedown = function (event) {
+    xPreviousPosition = event.pageX;//获取触控点x坐标
+    yPreviousPosition = event.pageY;//获取触控点y坐标
+    down = true;//按下鼠标
 }
 document.onmouseup = function (event) {
-    mPreviousX = event.pageX;//获取抬起点x坐标
-    mPreviousY = event.pageY;//获取抬起点y坐标
+    xPreviousPosition = event.pageX;//获取抬起点x坐标
+    yPreviousPosition = event.pageY;//获取抬起点y坐标
     down = false;//抬起鼠标
 }
 
@@ -93,7 +86,6 @@ document.onkeydown = function (event) {
             phiAngle -= 5;
             if (phiAngle < 0)
                 phiAngle = 360 - phiAngle;
-
             calCameraPosition(thetaAngle, phiAngle, distance);
             break;
 
@@ -103,7 +95,6 @@ document.onkeydown = function (event) {
             phiAngle += 5;
             if (phiAngle > 360)
                 phiAngle = phiAngle % 360;
-
             calCameraPosition(thetaAngle, phiAngle, distance);
             break;
 
@@ -127,7 +118,6 @@ document.onkeydown = function (event) {
             else if (thetaAngle < -90)
                 thetaAngle = -90;
             calCameraPosition(thetaAngle, phiAngle, distance);
-
             break
 
         case 80: // P键
@@ -161,19 +151,17 @@ document.onkeydown = function (event) {
 
         case 88: // X键
             console.log("X");
-            anticlockAngle = -4;
+            anticlockAngle = -6;
             modelMatrix.rotate(anticlockAngle, 0, 1, 0);
             // anticlockAngle=(anticlockAngle-0.5)%360;
             break;
 
         case 86: // V键
             console.log("V");
-            clockwiseAngle = 4;
+            clockwiseAngle = 6;
             modelMatrix.rotate(clockwiseAngle, 0, 1, 0);
             // clockwiseAngle=(clockwiseAngle+0.5)%360;
             break;
-
-
 
         case 90: // Z键
             console.log("Z");

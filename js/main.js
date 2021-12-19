@@ -4,8 +4,6 @@ var clockwiseAngle = 0;// 顺时针
 var anticlockAngle = 0;// 逆时针
 var rotateSpeed = 0;
 
-
-
 var distance = 50;
 var sunAngle = 0;
 
@@ -47,13 +45,11 @@ function calCameraPosition(theta_angle, phi_angle, camera_distance) {
     modelMatrix.setCamera(cameraX, cameraHeight, cameraY, 0, 0, 0, upX, upY, upZ); 	//设置摄像机位置
 }
 
-document.onmousemove = function (event)//鼠标移动
-{
-    if (down)//已经按下鼠标
-    {
+document.onmousemove = function (event) {
+    if (down) {//按下鼠标
         var dx = event.pageX - xPreviousPosition;//计算触控笔x位移
         var dy = event.pageY - yPreviousPosition;//计算触控笔y位移 
-        thetaAngle += dy * ROTATE_SCALE;	//设置摄像机绕x轴旋转的角度
+        thetaAngle += dy * ROTATE_SCALE;//设置摄像机绕x轴旋转的角度
         phiAngle += dx * ROTATE_SCALE;//设置光源绕y轴旋转的角度
         if (thetaAngle > 90) {
             thetaAngle = 90;	//设置旋转的角度为90
@@ -66,59 +62,58 @@ document.onmousemove = function (event)//鼠标移动
     xPreviousPosition = event.pageX;	//记录此次触控点的x坐标
     yPreviousPosition = event.pageY;	//记录此次触控点的y坐标
 }
-document.onmousedown = function (event) {
+document.onmousedown = function (event) {//按下鼠标
     xPreviousPosition = event.pageX;//获取触控点x坐标
     yPreviousPosition = event.pageY;//获取触控点y坐标
-    down = true;//按下鼠标
+    down = true;
 }
-document.onmouseup = function (event) {
+document.onmouseup = function (event) {//抬起鼠标
     xPreviousPosition = event.pageX;//获取抬起点x坐标
     yPreviousPosition = event.pageY;//获取抬起点y坐标
-    down = false;//抬起鼠标
+    down = false;
 }
-
 
 document.onkeydown = function (event) {
     switch (event.keyCode) {
-        case 68: // D键
-            console.log("D");
-            // console.log("D phiAngle " + phiAngle);
-            phiAngle -= 5;
-            if (phiAngle < 0)
-                phiAngle = 360 - phiAngle;
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break;
+        // case 68: // D键
+        //     console.log("D");
+        //     // console.log("D phiAngle " + phiAngle);
+        //     phiAngle -= 5;
+        //     if (phiAngle < 0)
+        //         phiAngle = 360 - phiAngle;
+        //     calCameraPosition(thetaAngle, phiAngle, distance);
+        //     break;
 
-        case 65: // A键
-            console.log("A");
-            // console.log("A phiAngle " + phiAngle);
-            phiAngle += 5;
-            if (phiAngle > 360)
-                phiAngle = phiAngle % 360;
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break;
+        // case 65: // A键
+        //     console.log("A");
+        //     // console.log("A phiAngle " + phiAngle);
+        //     phiAngle += 5;
+        //     if (phiAngle > 360)
+        //         phiAngle = phiAngle % 360;
+        //     calCameraPosition(thetaAngle, phiAngle, distance);
+        //     break;
 
-        case 87: // W键
-            console.log("W");
-            // console.log("W thetaAngle " + thetaAngle);
-            thetaAngle += 5;
-            if (thetaAngle > 90)
-                thetaAngle = 90;
-            else if (thetaAngle < -90)
-                thetaAngle = -90;
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break
+        // case 87: // W键
+        //     console.log("W");
+        //     // console.log("W thetaAngle " + thetaAngle);
+        //     thetaAngle += 5;
+        //     if (thetaAngle > 90)
+        //         thetaAngle = 90;
+        //     else if (thetaAngle < -90)
+        //         thetaAngle = -90;
+        //     calCameraPosition(thetaAngle, phiAngle, distance);
+        //     break
 
-        case 83: // S键
-            console.log("S");
-            // console.log("S thetaAngle " + thetaAngle);
-            thetaAngle -= 5;
-            if (thetaAngle > 90)
-                thetaAngle = 90;
-            else if (thetaAngle < -90)
-                thetaAngle = -90;
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break
+        // case 83: // S键
+        //     console.log("S");
+        //     // console.log("S thetaAngle " + thetaAngle);
+        //     thetaAngle -= 5;
+        //     if (thetaAngle > 90)
+        //         thetaAngle = 90;
+        //     else if (thetaAngle < -90)
+        //         thetaAngle = -90;
+        //     calCameraPosition(thetaAngle, phiAngle, distance);
+        //     break
 
         case 80: // P键
             console.log("P");

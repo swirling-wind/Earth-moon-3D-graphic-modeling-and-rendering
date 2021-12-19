@@ -40,7 +40,6 @@
     - 重置摄像头状态
       - 按下R键，重置摄像头的位置。
 
-![](RackMultipart20211218-4-1xotddg_html_dcd16a2eae5c5732.png) ![](RackMultipart20211218-4-1xotddg_html_6f9c4e2b8a9bfbc8.png)
 
 图1-1主要界面图
 

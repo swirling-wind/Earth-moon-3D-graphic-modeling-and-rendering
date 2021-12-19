@@ -5,11 +5,11 @@ var anticlockAngle = 0;// 逆时针
 var rotateSpeed = 0;
 
 var distance = 50;
-var sunAngle = 0;
 
 //光源坐标
-var sunX = 100;
-var sunZ = 0;
+var sunAngle = 60;
+var sunX = (Math.cos(Math.PI / 180 * sunAngle) * 100);//计算光源坐标
+var sunZ = -(Math.sin(Math.PI / 180 * sunAngle) * 100);
 
 //鼠标旋转
 var yPreviousPosition;//上次的触控位置Y坐标

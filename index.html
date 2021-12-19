@@ -30,7 +30,7 @@
 		<li id="pTip">P-Switch Projection Method</li>
 		<li id="tTip">T-Auto Rotation on/off</li>
 		<li id="rTip">R-Reset Status</li>
-		<input type="button" name="switchLang" value="中文" onclick="switchLanguage()">
+		<input type="button" name="switchLang" value="中文" style="width:80px;height:30px;" onclick="switchLanguage()">
 	</div>
 	<canvas height="700" width="1050" id="myCanvas">
 		<!-- Canvas Scale 2:3 -->
@@ -43,12 +43,12 @@
 	var langTips = {
 		'Chinese': {
 			'tips': {
-				'xvTip': "X/V-物体沿顺/逆时针方向旋转",
-				'qeTip': "Q/E-光源位置沿逆/顺时针方向移动",
-				'zcTip': "Z/C-拉远/拉近摄像头",
-				'pTip': "P-切换投影方式",
-				'tTip': "T-自动旋转与否",
-				'rTip': "R-重置状态",
+				'xvTip': "X/V-<br>物体沿顺/逆时针方向旋转",
+				'qeTip': "Q/E-<br>光源位置沿逆/顺时针方向旋转",
+				'zcTip': "Z/C-<br>相机距离拉远/拉近",
+				'pTip': "P-<br>切换平行投影/透视投影",
+				'tTip': "T-<br>是否自动旋转",
+				'rTip': "R-<br>重置状态",
 			},
 			'buttonValue': 'English',
 		},
@@ -57,7 +57,7 @@
 				'xvTip': "X/V-Objects Rotate Clockwise/Counterclockwise",
 				'qeTip': "Q/E-Light Source Rotates Clockwise/Counterclockwise",
 				'zcTip': "Z/C-Zoom out/in",
-				'pTip': "P-Switch Projection Method",
+				'pTip': "P-Switch Projection",
 				'tTip': "T-Auto Rotation on/off",
 				'rTip': "R-Reset Status",
 			},

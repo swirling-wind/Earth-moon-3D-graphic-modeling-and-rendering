@@ -34,15 +34,102 @@ function calCameraPosition(theta_angle, phi_angle, camera_distance) {
 
 function setProjection() {
     // modelMatrix.setProjectFrustum
-     if (isFrustum) { // 透视投影
+    if (isFrustum) { // 透视投影
         modelMatrix.setProjectFrustum(-1.5, 1.5, -1, 1, 2, 200);
     } else {			// 平行投影（正投影）
         modelMatrix.setProjectOrtho(-30, 30, -20, 20, 2, 200);
     }
 }
 
+document.onmousedown = function (event) {
+    mPreviousX = event.pageX;//获取触控点x坐标
+    mPreviousY = event.pageY;//获取触控点y坐标
+    down = true;//按下鼠标
+}
+document.onmousemove = function (event)//鼠标移动
+{
+    if (down)//已经按下鼠标
+    {
+        var moveX = event.pageX;//获取移动点x坐标
+        var moveY = event.pageY;//获取移动点x坐标
+
+        var dx = moveX - mPreviousX;//计算触控笔x位移
+        yAngle += dx * TOUCH_SCALE_FACTOR;//设置光源绕y轴旋转的角度
+        //触控横向位移，光源绕y轴旋转
+        sunx = (Math.cos(0.017453 * yAngle) * 100);//计算光源的x坐标
+        sunz = -(Math.sin(0.017453 * yAngle) * 100); //计算光源的z坐标
+
+
+        var dy = moveY - mPreviousY;//计算触控笔y位移 
+        xAngle += dy * TOUCH_SCALE_FACTOR;	//设置摄像机绕x轴旋转的角度
+        if (xAngle > 90) {
+            xAngle = 90;	//设置旋转的角度为90
+        }
+        else if (xAngle < -90) {
+            xAngle = -90;	//设置旋转的角度为-90
+        }
+        //触控纵向位移，摄像机绕x轴旋转 -90～+90
+        var cy = (50 * Math.sin(0.017453 * xAngle));//计算摄像机的y坐标
+        var cz = (50 * Math.cos(0.017453 * xAngle));//计算摄像机的z坐标
+        var upy = Math.cos(0.017453 * xAngle);
+        var upz = - Math.sin(0.017453 * xAngle);
+        ms.setCamera(0, cy, cz, 0, 0, 0, 0, upy, upz); 	//设置摄像机位置
+    }
+    mPreviousX = event.pageX;	//记录此次触控点的x坐标
+    mPreviousY = event.pageY;	//记录此次触控点的y坐标
+}
+document.onmouseup = function (event) {
+    mPreviousX = event.pageX;//获取抬起点x坐标
+    mPreviousY = event.pageY;//获取抬起点y坐标
+    down = false;//抬起鼠标
+}
+
+
 document.onkeydown = function (event) {
     switch (event.keyCode) {
+        case 68: // D键
+            console.log("D");
+            // console.log("D phiAngle " + phiAngle);
+            phiAngle -= 5;
+            if (phiAngle < 0)
+                phiAngle = 360 - phiAngle;
+
+            calCameraPosition(thetaAngle, phiAngle, distance);
+            break;
+
+        case 65: // A键
+            console.log("A");
+            // console.log("A phiAngle " + phiAngle);
+            phiAngle += 5;
+            if (phiAngle > 360)
+                phiAngle = phiAngle % 360;
+
+            calCameraPosition(thetaAngle, phiAngle, distance);
+            break;
+
+        case 87: // W键
+            console.log("W");
+            // console.log("W thetaAngle " + thetaAngle);
+            thetaAngle += 5;
+            if (thetaAngle > 90)
+                thetaAngle = 90;
+            else if (thetaAngle < -90)
+                thetaAngle = -90;
+            calCameraPosition(thetaAngle, phiAngle, distance);
+            break
+
+        case 83: // S键
+            console.log("S");
+            // console.log("S thetaAngle " + thetaAngle);
+            thetaAngle -= 5;
+            if (thetaAngle > 90)
+                thetaAngle = 90;
+            else if (thetaAngle < -90)
+                thetaAngle = -90;
+            calCameraPosition(thetaAngle, phiAngle, distance);
+
+            break
+
         case 80: // P键
             console.log("P");
             isFrustum = !isFrustum;
@@ -86,48 +173,7 @@ document.onkeydown = function (event) {
             // clockwiseAngle=(clockwiseAngle+0.5)%360;
             break;
 
-        case 68: // D键
-            console.log("D");
-            // console.log("D phiAngle " + phiAngle);
-            phiAngle -= 5;
-            if (phiAngle < 0)
-                phiAngle = 360 - phiAngle;
 
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break;
-
-        case 65: // A键
-            console.log("A");
-            // console.log("A phiAngle " + phiAngle);
-            phiAngle += 5;
-            if (phiAngle > 360)
-                phiAngle = phiAngle % 360;
-
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break;
-
-        case 87: // W键
-            console.log("W");
-            // console.log("W thetaAngle " + thetaAngle);
-            thetaAngle += 5;
-            if (thetaAngle > 90)
-                thetaAngle = 90;
-            else if (thetaAngle < -90)
-                thetaAngle = -90;
-            calCameraPosition(thetaAngle, phiAngle, distance);
-            break
-
-        case 83: // S键
-            console.log("S");
-            // console.log("S thetaAngle " + thetaAngle);
-            thetaAngle -= 5;
-            if (thetaAngle > 90)
-                thetaAngle = 90;
-            else if (thetaAngle < -90)
-                thetaAngle = -90;
-            calCameraPosition(thetaAngle, phiAngle, distance);
-
-            break
 
         case 90: // Z键
             console.log("Z");
@@ -182,7 +228,7 @@ var up_texture;
 
 function initializer() {
     var canvas = document.getElementById('myCanvas');
-    gl = canvas.getContext('webgl2', {antialias: true});
+    gl = canvas.getContext('webgl2', { antialias: true });
     if (!gl) //若失败
     {
         alert("WebGL isn't available!");
@@ -212,10 +258,8 @@ function initializer() {
     up_texture = load_image_texture(gl, "image/star_up.jpg");
 
     //若加载完毕
-    if (!shaderPartArray[2])
-    {
-        setTimeout(function ()
-        {
+    if (!shaderPartArray[2]) {
+        setTimeout(function () {
             earthSphere = new Sphere(gl, shaderPartArray[0], 7);
             moonSphere = new Sphere(gl, shaderPartArray[1], 3.5);
             starBox = new StarBox(gl, shaderPartArray[2]);
